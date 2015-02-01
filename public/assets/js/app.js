@@ -8,7 +8,7 @@ app.config(['$routeProvider', function ($routeProvider) {
             controller: 'postsController',
             templateUrl: '/assets/templates/home.html'
         })
-        .when('/apero/:id', {
+        .when('/apero/:orderId', {
             controller: 'itemController',
             templateUrl: '/assets/templates/item.html'
         });
@@ -33,17 +33,17 @@ app.controller('postsController', ['$scope', 'loaderService', function ($scope, 
 
     loaderService.getAll().success(function (data, status) {
         $scope.posts = data.posts;
-        //console.log($scope.posts);
+        console.log($scope.posts);
         $scope.loading = false;
     });
 
 }]);
 
-app.controller('itemController', 'loadService' ['$scope', 'loaderService', function ($scope) {
+app.controller('itemController', ['$scope', 'loaderService', '$routeParams', function ($scope, loaderService, $routeParams) {
 
-    loaderService.getOne(2).success(function (data, status) {
+    loaderService.getOne($routeParams.orderId).success(function (data, status) {
         $scope.post = data.post;
-        //console.log($scope.post);
+        console.log($scope.post);
     });
 
 }]);
