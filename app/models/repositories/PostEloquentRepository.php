@@ -1,0 +1,25 @@
+<?php
+
+namespace Repositories;
+
+use Post;
+
+
+class PostEloquentRepository implements PostRepositoryInterface
+{
+    public function all()
+    {
+        return Post::all();
+    }
+
+    public function find($id)
+    {
+        return Post::find($id);
+    }
+
+    public function create($input)
+    {
+        return Post::create($input);
+    }
+
+}
