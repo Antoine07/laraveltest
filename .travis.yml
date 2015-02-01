@@ -28,4 +28,4 @@ before_script:
 
 script:
   - vendor/bin/phpunit
-  - bin/behat --profile=dev
+  - vendor/bin/behat --profile=dev
