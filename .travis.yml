@@ -28,4 +28,4 @@ before_script:
 
 script:
   - vendor/bin/phpunit
-  - vendor/bin/behat --profile "dev"
+  - ./vendor/bin/behat --config behat.yml --profile dev
