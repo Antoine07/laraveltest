@@ -5,10 +5,4 @@ default:
     extensions:
         Behat\MinkExtension\Extension:
             goutte: ~
-            base_url: http://laraveltest.local:80
-
-dev:
-     extensions:
-        Behat\MinkExtension\Extension:
-            goutte: ~
             base_url: http://laraveltesting.l
