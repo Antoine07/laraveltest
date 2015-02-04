@@ -8,15 +8,17 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "laravel/framework": "4.2.*"
+    "laravel/framework": "4.2.*",
+    "guzzlehttp/guzzle": "4.2.3"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0",
     "mockery/mockery": "dev-master",
-    "behat/behat": "2.5.*",
-    "behat/mink": "1.5.*",
+    "behat/behat": "3.0.x-dev",
+    "behat/mink": "1.6.*",
     "behat/mink-extension": "*",
-    "behat/mink-goutte-driver": "*"
+    "behat/mink-goutte-driver" : "*",
+    "behat/mink-selenium2-driver" : "*"
   },
   "config": {
     "bin-dir": "bin/"

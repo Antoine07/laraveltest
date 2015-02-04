@@ -40,4 +40,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface
         return $this->orderBy('age', 'desc')->first();
     }
 
+    public function scopeAdmin($query)
+    {
+        return $query->where('role', '=', 'administrator');
+    }
+
 }

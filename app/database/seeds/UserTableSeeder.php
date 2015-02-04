@@ -22,6 +22,7 @@ class UserTableSeeder extends Seeder
                     'email' => 'antoine.lucsko@wanadoo.fr',
                     'age' => 42,
                     'score' => 15,
+                    'role' => 'administrator',
                     'password' => Hash::make('Antoine'),
                     'created_at' => $dateTime,
                     'updated_at' => $dateTime
@@ -31,6 +32,7 @@ class UserTableSeeder extends Seeder
                     'email' => 'cecile.lucsko@wanadoo.fr',
                     'age' => 42,
                     'score' => 15,
+                    'role' => 'visitor',
                     'password' => Hash::make('Cecile'),
                     'created_at' => $dateTime,
                     'updated_at' => $dateTime

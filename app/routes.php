@@ -1,39 +1,26 @@
 <?php
+/**
+ * @author Antoine
+ *
+ * @project Aperos technics 2015
+ */
 
-Route::get('/', ['as'=>'home', 'uses'=> 'BlogController@index']);
+Route::pattern('id', '[1-9][0-9]*');
+Route::pattern('slug', '[\w\-]+');
+Route::when('*', 'csrf', ['post', 'put', 'patch']);
 
-Route::get('users', ['as'=>'users', 'uses'=> 'BlogController@getUsers']);
+Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
+Route::get('login', ['as' => 'login', 'uses' => 'AuthController@login']);
+Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
 
-Route::post('buy', function () {
+// checkuser before post apero
+Route::post('authentification', ['as' => 'authentification', 'uses' => 'AuthController@auth']);
 
-    return Redirect::home()->with('flash_message', 'Foo');
-
+// API RESTFul
+Route::group(['before' => 'auth'], function () {
+    Route::resource('aperos', 'PostController');
 });
 
-
-Route::get('file', function(){
-
-    File::put(__DIR__.'/test.txt', 'Lorem ipsum');
-
-});
-
-Route::resource('posts', 'PostController');
-
-
-Route::get('test', function(){
-
-    //Post::truncate();
-
-    //return Post::all();
-
-    return App::environment();
-});
-
-//API RESTFul with AngularJS
-
-Route::resource('api/posts', 'AngularController');
-//
-//Route::get('apero', function(){
-//    return View::make('apero.index');
-//});
+// 404
+//App::abort(404);

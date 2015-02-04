@@ -1,5 +1,7 @@
 <?php
 
+use Mockery as m;
+
 class PostControllerTest extends TestCase
 {
 
@@ -8,62 +10,54 @@ class PostControllerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        Artisan::call('migrate');
-        Artisan::call('db:seed');
-        $this->mock = Mockery::mock('Eloquent', 'Post');
+
+        $this->mock = $this->mock('Post');
 
     }
 
     public function tearDown()
-	{
-		parent::tearDown();
-		Artisan::call('migrate:reset');
-		Mockery::close();
-	}
-
-    public function testFilePut()
     {
-        File::shouldReceive('put')->once();
-        $this->call('GET', 'file');
+        parent::tearDown();
+        m::close();
+
     }
 
+    protected function mock($class)
+    {
+        $mock = m::mock('Eloquent', $class);
+        $this->app->instance($class, $mock);
+
+        return $mock;
+    }
 
     /**
-     * @test RESTfull controller PostController
+     * @test RESTfull home page return method all mockery
      */
 
     public function testPostControllerIndex()
     {
-
         $this->mock->shouldReceive('all')
             ->once();
 
-        $this->app->instance('Post', $this->mock);
-
-        $this->call('GET', 'posts');
-
+        $this->call('GET', 'aperos');
         $this->assertViewHas('posts');
     }
 
     /**
-     * @test RESTFull store and redirect to posts route
+     * @test RESTFull store apero success
      */
 
     public function testStoreSuccess()
     {
 
-        $input = ['title' => 'PHP', 'content'=>'blabla'];
-
+        $input = ['title' => 'PHP', 'content' => 'blabla'];
 
         $this->mock->shouldReceive('create')
             ->once()
             ->with($input);
 
-        $this->app->instance('Post', $this->mock);
-
-        $this->call('POST', 'posts', $input);
-
-        $this->assertRedirectedToRoute('posts.index', null, ['message' => 'Your post has been created']);
+        $this->call('POST', 'aperos', $input);
+        $this->assertRedirectedToRoute('aperos.index', null, ['message' => 'Your post has been created']);
     }
 
 
@@ -73,54 +67,31 @@ class PostControllerTest extends TestCase
 
     public function testStoreFails()
     {
-
         $input = ['title' => ''];
 
-        $this->app->instance('Repositories\PostRepositoryInterface', $this->mock);
-
-        $this->call('POST', 'posts', $input);
-
-        $this->assertRedirectedToRoute('posts.create');
+        $this->call('POST', 'aperos', $input);
+        $this->assertRedirectedToRoute('aperos.create');
         $this->assertSessionHasErrors(['title']);
     }
 
     /**
-     * @test crawler the DOM with index view RESTFull
+     * @test post and send message to administrator id=1 see seeders
      */
-
-    public function testIndexCrawler()
+    public function testMailerSendWhenPost()
     {
+        $input = ['title' => 'PHP', 'content' => 'blabla'];
 
-        $crawler = $this->client->request('GET', 'posts');
+        $this->mock->shouldReceive('create')
+            ->once()
+            ->with($input);
 
-        $h2 = $crawler->filter('h2:contains("Title:")');
+        $mock = m::mock('Repositories\UserMailer');
+        $this->app->instance('Repositories\UserMailer', $mock);
 
-        $this->assertEquals(2, count($h2));
+        $mock->shouldReceive('welcome')->once();
+
+        $this->call('POST', 'aperos', $input);
     }
-
-    /**
-     * @test crawler into the list
-     */
-
-    public function testCrawlerListValue()
-    {
-        $crawler = $this->client->request('GET', 'posts');
-        $item = $crawler->filter('ul.tasks li');
-
-        $task = $item->each(function($node, $ind){
-            return $node->text();
-        });
-
-        $expected = ['voir la boutique', 'voir la tour Eifel', 'aller se coucher'];
-
-        foreach($task as $text)
-        {
-            $this->assertEquals(array_shift($expected), $text);
-        }
-
-    }
-
-
 
 
 }

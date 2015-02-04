@@ -11,11 +11,7 @@
         <div>{{$post->content}}</div>
 
     @endforeach
-    <ul class="tasks">
-        <li>voir la boutique</li>
-        <li>voir la tour Eifel</li>
-        <li>aller se coucher</li>
-    </ul>
+
 @else
-    <p>désolé par d'article</p>
+    <p>désolé par d'apéros</p>
 @endif

@@ -10,16 +10,3 @@ default:
         Behat\MinkExtension:
             goutte: ~
             base_url: http://laraveltest.local:80
-
-dev:
-    autoload:
-        '': %paths.base%/app/tests/acceptance/bootstrap
-    suites:
-        default:
-            paths:
-                - %paths.base%/app/tests/acceptance
-
-    extensions:
-        Behat\MinkExtension:
-            goutte: ~
-            base_url: http://laraveltesting.l

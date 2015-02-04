@@ -1,9 +1,11 @@
 <?php
 
 
-class PostTableSeeder extends Seeder {
+class PostTableSeeder extends Seeder
+{
 
-    public function run() {
+    public function run()
+    {
         DB::table('posts')->delete();
         DB::statement("ALTER TABLE posts AUTO_INCREMENT=1");
         $dateTime = new DateTime('now');
@@ -13,18 +15,14 @@ class PostTableSeeder extends Seeder {
                 [
                     'title' => 'PSR-4 Autoload',
                     'user_id' => 1,
-                    'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. ',
-                    'status' => 'unpublish',
-                    'created_at' => $dateTime,
-                    'updated_at' => $dateTime
+                    'tag_id' =>1
+
                 ],
                 [
                     'title' => 'Eloquent',
                     'user_id' => 1,
-                    'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. ',
-                    'status' => 'publish',
-                    'created_at' => $dateTime,
-                    'updated_at' => $dateTime
+                    'tag_id' =>1
+
                 ]
             ]
         );

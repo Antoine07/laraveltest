@@ -1,15 +1,25 @@
 <?php
 
-use Repositories\PostRepositoryInterface;
+use Repositories\UserMailer;
 
 class PostController extends \BaseController
 {
 
     protected $post;
+    protected $user;
+    protected $tag;
+    protected $mailer;
 
-    public function __construct(Post $post)
+    public function __construct(
+        Post $post,
+        User $user,
+        Tag $tag,
+        UserMailer $mailer)
     {
         $this->post = $post;
+        $this->user = $user;
+        $this->tag = $tag;
+        $this->mailer = $mailer;
     }
 
 
@@ -23,7 +33,7 @@ class PostController extends \BaseController
 
         $posts = $this->post->all();
 
-        return View::make('posts.index', compact('posts'));
+        return View::make('aperos.index', compact('posts'));
     }
 
 
@@ -34,12 +44,19 @@ class PostController extends \BaseController
      */
     public function create()
     {
-        return View::make('posts.create');
+        $tags = $this->tag->names()->get();
+
+        $options = [];
+        foreach ($tags as $tag) {
+            $options[$tag->id] = $tag->name;
+        }
+
+        return View::make('aperos.create', compact('options'));
     }
 
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new apero
      *
      * @return Response
      */
@@ -51,7 +68,7 @@ class PostController extends \BaseController
         $v = Validator::make($input, ['title' => 'required', 'content' => 'required']);
 
         if ($v->fails()) {
-            return Redirect::route('posts.create')
+            return Redirect::route('aperos.create')
                 ->withInput()
                 ->withErrors($v->messages())
                 ->withFlashMessage('Please fill out both inputs');
@@ -59,7 +76,10 @@ class PostController extends \BaseController
 
             $this->post->create($input);
 
-            return Redirect::route('posts.index')->with('message', 'Your post has been created');
+            $user = $this->user->find(1);
+            $this->mailer->welcome($user);
+
+            return Redirect::route('aperos.index')->with('message', 'Your post has been created');
         }
 
     }

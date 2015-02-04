@@ -13,7 +13,6 @@
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory>./app/tests/</directory>
-            <exclude>./app/tests/GeneralTest.php</exclude>
         </testsuite>
     </testsuites>
 </phpunit>

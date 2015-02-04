@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration {
 			$table->string('password', 100);
 			$table->integer('score');
 			$table->integer('age');
+			$table->enum('role', ['visitor', 'administrator'])->default('visitor');
+			$table->enum('status', ['online', 'offline'])->default('offline');
 			$table->timestamps();
 		});
 	}

@@ -16,8 +16,10 @@ class CreatePostsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('user_id')->unsigned()->nullable();
+			$table->enum('custom', ['apero', 'post', 'page'])->default('apero');
 			$table->string('title', 50);
 			$table->text('content');
+			$table->string('url_thumbnail');
 			$table->enum('status', ['publish', 'unpublish', 'trash'])->default('unpublish');
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL');
 			$table->timestamps();

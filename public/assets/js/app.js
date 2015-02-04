@@ -21,23 +21,24 @@ app.factory('loaderService', ['$http', function ($http) {
             return $http.get('http://laraveltest.local/api/posts');
         },
         getOne: function (id) {
-            return $http.get('http://laraveltest.local/api/posts/'+id);
+            return $http.get('http://laraveltest.local/api/posts/' + id);
         }
     };
 
 }]);
+(function () {
+    app.controller('postsController', ['$scope', 'loaderService', function ($scope, loaderService) {
 
-app.controller('postsController', ['$scope', 'loaderService', function ($scope, loaderService) {
+        $scope.loading = true;
 
-    $scope.loading = true;
+        loaderService.getAll().success(function (data, status) {
+            $scope.posts = data.posts;
+            console.log($scope.posts);
+            $scope.loading = false;
+        });
 
-    loaderService.getAll().success(function (data, status) {
-        $scope.posts = data.posts;
-        console.log($scope.posts);
-        $scope.loading = false;
-    });
-
-}]);
+    }])
+})();
 
 app.controller('itemController', ['$scope', 'loaderService', '$routeParams', function ($scope, loaderService, $routeParams) {
 
