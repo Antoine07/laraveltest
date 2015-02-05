@@ -9,3 +9,5 @@ composer.lock
 .env.php
 .DS_Store
 Thumbs.db
+fabfile.py
+*.pyc
