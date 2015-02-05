@@ -20,8 +20,8 @@ class PostController extends \BaseController
         $this->user = $user;
         $this->tag = $tag;
         $this->mailer = $mailer;
-    }
 
+    }
 
     /**
      * Display a listing of the resource.
@@ -35,7 +35,6 @@ class PostController extends \BaseController
 
         return View::make('aperos.index', compact('posts'));
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -79,7 +78,7 @@ class PostController extends \BaseController
             $user = $this->user->find(1);
             $this->mailer->welcome($user);
 
-            return Redirect::route('aperos.index')->with('message', 'Your post has been created');
+            return Redirect::route('home')->with('message', 'Your post has been created');
         }
 
     }

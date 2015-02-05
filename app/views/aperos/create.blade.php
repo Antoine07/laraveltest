@@ -1,13 +1,13 @@
-@extends('layouts.master)
-
+@extends('layouts.master')
 
 @section('content')
-    @if (Session::has('flash_message'))
-        <div class="alert alert-info">{{ Session::get('flash_message') }}</div>
+    @if (Session::has('message'))
+        <div class="alert alert-info">{{ Session::get('message') }}</div>
     @endif
+    <h2 class="adminapero">Welcome to admin apero, hello</h2>
     <div class="row">
         <div class="col-lg-6">
-            {{Form::open(['route'=>'posts.store', 'method'=>'POST', 'file' => true])}}
+            {{Form::open(['url'=>'aperos', 'method'=>'POST', 'file' => true])}}
 
             <div class="form-group">
                 {{Form::label('title', 'give a title of aperitif')}}

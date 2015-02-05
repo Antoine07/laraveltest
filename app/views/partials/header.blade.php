@@ -14,24 +14,19 @@
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="navbar-header">
                 <ol class="breadcrumb">
-                    @if (isset($breadcrumb) )
-                    @foreach ($breadcrumb as $b)
-                    <li>{{$b}}</li>
-                    @endforeach
-                    @endif
+
                 </ol>
             </div>
             <div class="navbar-collapse collapse navbar-right">
                 @section('nav')
-                <ul class="nav navbar-nav" id="menu-menu-principal">
-                    <li {{ (isset($active) && $active=='home')?
-                    'class="active"' : '' }} ><a href="{{url('/')}}">
-                        <span class="glyphicon glyphicon-home">Home</span></a>
-                    </li>
-                    <li>chercher apéro</li>
-                    <li>organiser apéro</li>
-                    <li>se connecter</li>
-                </ul>
+                    <ul class="nav navbar-nav" id="menu-menu-principal">
+                        <li><a href="{{url('/')}}">
+                                <span class="glyphicon glyphicon-home">Home</span></a>
+                        </li>
+                        <li>chercher apéro</li>
+                        <li>organiser apéro</li>
+                        <li>se connecter</li>
+                    </ul>
                 @show
             </div>
         </nav>

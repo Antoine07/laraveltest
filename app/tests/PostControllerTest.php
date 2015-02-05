@@ -57,7 +57,7 @@ class PostControllerTest extends TestCase
             ->with($input);
 
         $this->call('POST', 'aperos', $input);
-        $this->assertRedirectedToRoute('aperos.index', null, ['message' => 'Your post has been created']);
+        $this->assertRedirectedToRoute('home', null, ['message' => 'Your post has been created']);
     }
 
 

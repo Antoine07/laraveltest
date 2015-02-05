@@ -29,6 +29,7 @@ class AuthController extends BaseController
     {
 
         if (Input::server("REQUEST_METHOD") == "POST") {
+
             $userdata = [
                 'username' => Input::get('username'),
                 'password' => Input::get('password'),
@@ -52,7 +53,7 @@ class AuthController extends BaseController
 
             if (!Auth::guest()) {
                 //return "hello";
-                return Redirect::to('aperos')->with('message', 'Hello, i know you now, post your apero');
+                return Redirect::to('aperos/create')->with('message', 'Hello, i know you now, post your apero');
             }
         }
     }
@@ -67,7 +68,7 @@ class AuthController extends BaseController
 
         if (Auth::attempt($userdata, $remember)) {
 
-            return Redirect::to('aperos')->with('message', 'Hello, i know you now, post your apero');
+            return Redirect::to('aperos/create')->with('message', 'Hello, i know you now, post your apero');
         }
 
         return Redirect::to('login')

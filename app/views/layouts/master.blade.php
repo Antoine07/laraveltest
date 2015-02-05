@@ -6,7 +6,7 @@
         </div>
         <div class="col-lg-4 col-xs-offset-4">
             <blockquote>
-                @if (Session::has('message'))
+                @if(Session::has('message'))
                     <div class="alert alert-info">{{ Session::get('message') }}</div>
                 @endif
             </blockquote>

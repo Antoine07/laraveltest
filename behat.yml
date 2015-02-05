@@ -5,8 +5,12 @@ default:
         default:
             paths:
                 - %paths.base%/app/tests/acceptance
+        core:
+            contexts: [FeatureContext]
+            filters: { tags: '@core' }
 
     extensions:
         Behat\MinkExtension:
+            base_url: http://laraveltest.local
             goutte: ~
-            base_url: http://laraveltest.local:80
+            selenium2: ~

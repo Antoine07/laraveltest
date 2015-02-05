@@ -36,7 +36,7 @@ class LoginTest extends TestCase
 
         $this->call('POST', 'authentification', $input);
 
-        $this->assertRedirectedToRoute('aperos.index', null, [ 'message' => 'Hello, i know you now, post your apero']);
+        $this->assertRedirectedToRoute('aperos.create', null, [ 'message' => 'Hello, i know you now, post your apero']);
 
     }
 
