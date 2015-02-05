@@ -13,9 +13,9 @@ before_script:
    - composer self-update
    - composer install
    - "mysql -utravis -e 'create database if not exists `laraveltesting`;'"
-   - php artisan serve
+   - php artisan serve &
    - sleep 5
 
 script:
   - vendor/bin/phpunit
-  - vendor/bin/behat --profile testing
+  - vendor/bin/behat
