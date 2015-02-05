@@ -17,5 +17,4 @@ before_script:
    - sleep 5
 
 script:
-  - vendor/bin/behat
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit && vendor/bin/behat
