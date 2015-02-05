@@ -10,35 +10,29 @@ class PostControllerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-
         $this->mock = $this->mock('Post');
-
     }
 
     public function tearDown()
     {
         parent::tearDown();
         m::close();
-
     }
 
     protected function mock($class)
     {
         $mock = m::mock('Eloquent', $class);
         $this->app->instance($class, $mock);
-
         return $mock;
     }
 
     /**
      * @test RESTfull home page return method all mockery
      */
-
     public function testPostControllerIndex()
     {
         $this->mock->shouldReceive('all')
             ->once();
-
         $this->call('GET', 'aperos');
         $this->assertViewHas('posts');
     }
@@ -46,7 +40,6 @@ class PostControllerTest extends TestCase
     /**
      * @test RESTFull store apero success
      */
-
     public function testStoreSuccess()
     {
 
@@ -56,6 +49,10 @@ class PostControllerTest extends TestCase
             ->once()
             ->with($input);
 
+        $mock = m::mock('Repositories\UserMailer');
+        $this->app->instance('Repositories\UserMailer', $mock);
+        $mock->shouldReceive('welcome')->once();
+
         $this->call('POST', 'aperos', $input);
         $this->assertRedirectedToRoute('home', null, ['message' => 'Your post has been created']);
     }
@@ -64,7 +61,6 @@ class PostControllerTest extends TestCase
     /**
      * @test RESTFull store and redirect to posts route
      */
-
     public function testStoreFails()
     {
         $input = ['title' => ''];
@@ -87,11 +83,8 @@ class PostControllerTest extends TestCase
 
         $mock = m::mock('Repositories\UserMailer');
         $this->app->instance('Repositories\UserMailer', $mock);
-
         $mock->shouldReceive('welcome')->once();
-
         $this->call('POST', 'aperos', $input);
     }
-
 
 }

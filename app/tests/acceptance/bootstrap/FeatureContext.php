@@ -37,6 +37,7 @@ class FeatureContext extends MinkContext implements SnippetAcceptingContext
         $app = require __DIR__ . '/../../../../bootstrap/start.php';
 
         $app->boot();
+        Artisan::call('migrate:reset');
         Artisan::call('migrate');
         Artisan::call('db:seed');
     }

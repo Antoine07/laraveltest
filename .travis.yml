@@ -9,25 +9,12 @@ branches:
   only:
     - dev
 
-before_install:
-  - sudo apt-get install php5-cli php5-curl -y --force-yes
-
 before_script:
-   - sudo apt-get install apache2 libapache2-mod-fastcgi
-   # enable php-fpm
-   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
-   - sudo a2enmod rewrite actions fastcgi alias
-   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
-   # configure apache virtual hosts
-   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
-   - sudo sed -i -e "/DocumentRoot/i\ServerName laraveltesting.l" /etc/apache2/sites-available/default
-   - echo "127.0.0.1 laraveltesting.l" | sudo tee -a /etc/hosts
-   - sudo /etc/init.d/apache2 restart
-   - sudo service apache2 restart
    - composer self-update
    - composer install
    - "mysql -utravis -e 'create database if not exists `laraveltesting`;'"
+   - php artisan serve
+   - sleep 5
 
 script:
   - vendor/bin/phpunit
